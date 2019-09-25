@@ -221,6 +221,7 @@
   var getWizardY = function (height) {
     // Результат, возвращаемый вашей функцией, игра будет использовать, чтобы задать положение мага по вертикали.
     // Напишите функцию так, чтобы маг появлялся на высоте две трети игрового поля от земли.
+    var wizardHeight = getWizardHeight(wizardWidth);
     return Math.round(height / 3 - wizardHeight);
   }
 </script>
