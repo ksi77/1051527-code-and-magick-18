@@ -44,10 +44,10 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
-var getPlayerHeight = function (playerTime, maxTime) {
+var getPlayerBarHeight = function (playerTime, maxTime) {
   return Math.round(((BAR_HEIGHT - GAP * 2) * playerTime) / maxTime);
 };
-
+// Добавлены функции
 var getRandomColor = function (name, colorInDeg) {
   return (name === 'Вы') ? YOUR_COLOR : 'hsl(' + colorInDeg + ', 50%,' + Math.random() * 100 + '%)';
 };
@@ -57,7 +57,7 @@ var renderBar = function (ctx, x, y, width, height, color) {
   ctx.fillRect(x, y, width, height, color);
 };
 
-var renderText = function (ctx, text, x, y, textColor) {
+var renderText = function (ctx, x, y, text, textColor) {
   ctx.fillStyle = textColor;
   ctx.fillText(text, x, y);
 };
@@ -70,16 +70,16 @@ window.renderStatistics = function (ctx, names, times) {
   var maxTime = getMaxElement(times);
   ctx.font = FONT_STYLE;
   ctx.fillStyle = YOUR_COLOR;
-  renderText(ctx, 'Ура, вы победили!', CLOUD_X + MARGIN * 3, CLOUD_Y + MARGIN + GAP, TEXT_COLOR);
-  renderText(ctx, 'Список результатов:', CLOUD_X + MARGIN * 3, CLOUD_Y + MARGIN + GAP * 2, TEXT_COLOR);
+  renderText(ctx, CLOUD_X + MARGIN * 3, CLOUD_Y + MARGIN + GAP, 'Ура, вы победили!', TEXT_COLOR);
+  renderText(ctx, CLOUD_X + MARGIN * 3, CLOUD_Y + MARGIN + GAP * 2, 'Список результатов:', TEXT_COLOR);
 
   for (var i = 0; i < names.length; i++) {
-    var barPlayerHeight = getPlayerHeight(times[i], maxTime);
+    var playerBarHeight = getPlayerBarHeight(times[i], maxTime);
     var barX = CLOUD_X + MARGIN * 2 + i * (BAR_WIDTH + SPACE_BETWEEN);
-    var barY = CLOUD_Y + CLOUD_HEIGHT - MARGIN - GAP - barPlayerHeight;
+    var barY = CLOUD_Y + CLOUD_HEIGHT - MARGIN - GAP - playerBarHeight;
     var barColor = getRandomColor(names[i], OTHERS_COLOR);
-    renderText(ctx, Math.round(times[i]), barX, barY - GAP, TEXT_COLOR);
-    renderBar(ctx, barX, barY, BAR_WIDTH, barPlayerHeight, barColor);
-    renderText(ctx, names[i], barX, barY + barPlayerHeight + GAP, TEXT_COLOR);
+    renderText(ctx, barX, barY - GAP, Math.round(times[i]), TEXT_COLOR);
+    renderBar(ctx, barX, barY, BAR_WIDTH, playerBarHeight, barColor);
+    renderText(ctx, barX, barY + playerBarHeight + GAP, names[i], TEXT_COLOR);
   }
 };
