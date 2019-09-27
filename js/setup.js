@@ -15,21 +15,15 @@ var getRandomElement = function (array) {
   return array[Math.round((array.length - 1) * Math.random())];
 };
 
-var createWizard = function (wizardNames, wizardSurnames, wizardCoatColors, wizardEyesColors) {
-  var newWizard = {
-    // Без проверки на повторение имен.
-    name: getRandomElement(wizardNames) + ' ' + getRandomElement(wizardSurnames),
-    coatColor: getRandomElement(wizardCoatColors),
-    eyesColor: getRandomElement(wizardEyesColors)
-  };
-  return newWizard;
-};
-
-var createWizardsList = function (wizardNames, wizardSurnames, wizardCoatColors, wizardEyesColors, listLenght) {
+var createWizardsList = function (listLenght) {
   var wizards = [];
 
   for (i = 0; i < listLenght; i++) {
-    wizards.push(createWizard(wizardNames, wizardSurnames, wizardCoatColors, wizardEyesColors));
+    wizards.push({
+      name: getRandomElement(WIZARD_NAMES) + ' ' + getRandomElement(WIZARD_SURNAMES),
+      coatColor: getRandomElement(WIZARD_COAT_COLORS),
+      eyesColor: getRandomElement(WIZARD_EYES_COLORS)
+    });
   }
   return wizards;
 };
@@ -37,13 +31,13 @@ var createWizardsList = function (wizardNames, wizardSurnames, wizardCoatColors,
 var similarListElement = userDialog.querySelector('.setup-similar-list');
 
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
-    .content
-    .querySelector('.setup-similar-item');
+    .content;
+var similarWizard = similarWizardTemplate.querySelector('.setup-similar-item');
 
-var wizards = createWizardsList(WIZARD_NAMES, WIZARD_SURNAMES, WIZARD_COAT_COLORS, WIZARD_EYES_COLORS, WIZARD_COUNT);
+var wizards = createWizardsList(WIZARD_COUNT);
 
 var renderWizard = function (wizard) {
-  var wizardElement = similarWizardTemplate.cloneNode(true);
+  var wizardElement = similarWizard.cloneNode(true);
   wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
   wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
   wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
