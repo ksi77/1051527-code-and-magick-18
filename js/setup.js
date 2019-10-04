@@ -82,17 +82,13 @@ var closePopup = function () {
   document.removeEventListener('keydown', onPopupEscPress);
 };
 
-// Эти 5 параметров, да еще ++3 переменные. Мне думается, всего лищь переставить элемент в конец массива таки проще.
-// Уж согласись!!!
-var changeColor = function (element, propertyName, colorArray, colorIndex, hiddenInput) {
-  hiddenInput.value = colorArray[colorIndex];
-  if (propertyName === 'fill') {
-    element.style.fill = colorArray[colorIndex];
-  }
-  if (propertyName === 'background') {
-    element.style.background = colorArray[colorIndex];
-  }
+var getNewColorIndex = function (colorArray, colorIndex) {
   return (colorIndex === colorArray.length - 1) ? 0 : colorIndex + 1;
+};
+
+var setNewColor = function (color, propertyName, element, hiddenInput) {
+  hiddenInput.value = color;
+  element.style[propertyName] = color;
 };
 
 // Окно .setup должно открываться по нажатию на блок .setup-open. Открытие окна производится удалением класса hidden у блока
@@ -126,7 +122,6 @@ setupTitle.addEventListener('keydown', function (evt) {
   evt.stopPropagation();
 });
 
-// Изменение цвета мантии персонажа по нажатию.
 // Цвет мантии .setup-wizard .wizard-coat должен обновляться по нажатию на неё.
 // Цвет мантии задаётся через изменение инлайнового CSS-свойства fill для элемента.
 
@@ -135,22 +130,23 @@ var wizardCoat = setupWizard.querySelector('.wizard-coat');
 var hiddenInputCoat = setup.querySelector('[name = coat-color]');
 
 wizardCoat.addEventListener('click', function () {
-  coatColorsIndex = changeColor(wizardCoat, 'fill', WIZARD_COAT_COLORS, coatColorsIndex, hiddenInputCoat);
+  coatColorsIndex = getNewColorIndex(WIZARD_COAT_COLORS, coatColorsIndex);
+  setNewColor(WIZARD_COAT_COLORS[coatColorsIndex], 'fill', wizardCoat, hiddenInputCoat);
 });
 
-// Изменение цвета глаз персонажа по нажатию.
 // Цвет глаз волшебника меняется по нажатию на блок .setup-wizard .wizard-eyes.
 var wizardEyes = setupWizard.querySelector('.wizard-eyes');
 var hiddenInputEyes = setup.querySelector('[name = eyes-color]');
 wizardEyes.addEventListener('click', function () {
-  eyesColorsIndex = changeColor(wizardEyes, 'fill', WIZARD_EYES_COLORS, eyesColorsIndex, hiddenInputEyes);
+  eyesColorsIndex = getNewColorIndex(WIZARD_EYES_COLORS, eyesColorsIndex);
+  setNewColor(WIZARD_EYES_COLORS[eyesColorsIndex], 'fill', wizardEyes, hiddenInputEyes);
 });
 
 // Изменение цвета фаерболов по нажатию. Цвет задаётся через изменение фона у блока .setup-fireball-wrap.
-// Возможные варианты цвета:
 //
 var fireball = setup.querySelector('.setup-fireball-wrap');
 var hiddenInputFireball = setup.querySelector('[name = fireball-color]');
 fireball.addEventListener('click', function () {
-  fireballColorsIndex = changeColor(fireball, 'background', FIREBALL_COLORS, fireballColorsIndex, hiddenInputFireball);
+  fireballColorsIndex = getNewColorIndex(FIREBALL_COLORS, fireballColorsIndex);
+  setNewColor(FIREBALL_COLORS[fireballColorsIndex], 'backgroundColor', fireball, hiddenInputFireball);
 });
