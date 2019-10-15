@@ -31,7 +31,7 @@ window.backend = (function () {
       xhr.responseType = 'json';
 
       xhr.addEventListener('load', function () {
-        onLoad(xhr.response);
+        onLoad();
       });
       xhr.addEventListener('error', function () {
         onError('Произошла ошибка соединения');

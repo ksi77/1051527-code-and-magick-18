@@ -14,9 +14,14 @@ window.setup = (function () {
   var eyesColorsIndex = 0;
   var fireballColorsIndex = 0;
   //
-  // var getRandomElement = function (array) {
-  //   return array[Math.round((array.length - 1) * Math.random())];
-  // };
+  function getRandomElement(array, uniqueElement) {
+    var randomIndex = Math.round((array.length - 1) * Math.random());
+    var randomElement = array[randomIndex];
+    if (uniqueElement === true) {
+      array.splice(randomIndex, 1);
+    }
+    return randomElement;
+  }
 
   // var createWizardsList = function (listLenght) {
   //   var wizards = [];
@@ -95,7 +100,7 @@ window.setup = (function () {
   var successHandler = function (wizards) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < 4; i++) {
-      fragment.appendChild(renderWizard(wizards[i]));
+      fragment.appendChild(renderWizard(getRandomElement(wizards, true)));
     }
     similarListElement.appendChild(fragment);
 
@@ -114,7 +119,7 @@ window.setup = (function () {
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  var loadHandler = function (response) {
+  var loadHandler = function () {
     setup.classList.add('hidden');
   };
 
