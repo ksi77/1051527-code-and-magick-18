@@ -45,16 +45,20 @@ window.wizard = (function () {
   function onEyesChange() {
     eyesColorsIndex = getNewColorIndex(WIZARD_EYES_COLORS, eyesColorsIndex);
     setNewColor(WIZARD_EYES_COLORS[eyesColorsIndex], 'fill', wizardEyes, hiddenInputEyes);
-    window.util.eyesColor = wizardEyes.style.fill;
-    window.similar.updateWizards();
+    window.debounce(function () {
+      window.util.eyesColor = wizardEyes.style.fill;
+      window.similar.updateWizards();
+    })();
   }
 
-  var onCoatChange = window.debounce(function () {
+  function onCoatChange() {
     coatColorsIndex = getNewColorIndex(WIZARD_COAT_COLORS, coatColorsIndex);
     setNewColor(WIZARD_COAT_COLORS[coatColorsIndex], 'fill', wizardCoat, hiddenInputCoat);
-    window.util.coatColor = wizardCoat.style.fill;
-    window.similar.updateWizards();
-  });
+    window.debounce(function () {
+      window.util.coatColor = wizardCoat.style.fill;
+      window.similar.updateWizards();
+    })();
+  }
 
 
   window.util.eyesColor = wizardEyes.style.fill === '' ? 'black' : wizardEyes.style.fill;
