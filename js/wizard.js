@@ -43,18 +43,18 @@ window.wizard = (function () {
   });
 
   function onEyesChange() {
-    eyesColorsIndex = getNewColorIndex(WIZARD_EYES_COLORS, eyesColorsIndex);
-    setNewColor(WIZARD_EYES_COLORS[eyesColorsIndex], 'fill', wizardEyes, hiddenInputEyes);
     window.debounce(function () {
+      eyesColorsIndex = getNewColorIndex(WIZARD_EYES_COLORS, eyesColorsIndex);
+      setNewColor(WIZARD_EYES_COLORS[eyesColorsIndex], 'fill', wizardEyes, hiddenInputEyes);
       window.util.eyesColor = wizardEyes.style.fill;
       window.similar.updateWizards();
     })();
   }
 
   function onCoatChange() {
-    coatColorsIndex = getNewColorIndex(WIZARD_COAT_COLORS, coatColorsIndex);
-    setNewColor(WIZARD_COAT_COLORS[coatColorsIndex], 'fill', wizardCoat, hiddenInputCoat);
     window.debounce(function () {
+      coatColorsIndex = getNewColorIndex(WIZARD_COAT_COLORS, coatColorsIndex);
+      setNewColor(WIZARD_COAT_COLORS[coatColorsIndex], 'fill', wizardCoat, hiddenInputCoat);
       window.util.coatColor = wizardCoat.style.fill;
       window.similar.updateWizards();
     })();
